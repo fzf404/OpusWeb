@@ -42,6 +42,9 @@ $(function () {
           $('#login-link').addClass('d-none')
           $('#userinfo').removeClass('d-none')
           $('#userinfo a').text(data.data.user.name)
+          $('#nav-headimg').attr('src',data.data.user.headimg)
+        } else {
+          console.log("Token已过期，请重新登录")
         }
       }
     })

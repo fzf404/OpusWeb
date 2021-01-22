@@ -6,6 +6,10 @@ $(function () {
       method: 'GET',
       // 得到响应的处理
       success: data => {
+        if(data.code != '200'){
+          alert('该分区暂时没有文章哦~')
+          return
+        }
         $.each(data.data.articles, (index, item) => {
           username = item.username
           title = item.title
@@ -23,13 +27,17 @@ $(function () {
           $(`#${index} img`).attr('src', headimg)
           $(`#${index} .likes`).text(likes)
           $(`#${index} .share`).text(share)
-
+          $(`#${index}`).on('click',()=>{
+            window.location.href=`/article?artid=${item.artid}`
+          })
           if (issuper == true) {
             $(`#${index} .badage-art`).text('精品')
             $(`#${index} .badage-art`).removeClass('badge-primary')
             $(`#${index} .badage-art`).addClass('badge-success')
           } else {
             $(`#${index} .badage-art`).text('推荐')
+            $(`#${index} .badage-art`).removeClass('badge-success')
+            $(`#${index} .badage-art`).addClass('badge-primary')
           }
         })
       },

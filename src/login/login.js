@@ -42,6 +42,7 @@ $(function () {
           //存储Token
           window.localStorage.setItem('token', data.data.token);
           // console.log(window.sessionStorage.token)
+          window.location.href = "/";
         }
       },
       // 未响应的处理

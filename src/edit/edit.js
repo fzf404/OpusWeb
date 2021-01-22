@@ -49,19 +49,18 @@ $(function () {
       // 得到响应的处理
       success: data => {
         if (data.code != "200") {
-          $('#imgpath').val("不登录是没法上传图片的~");
+          alert(data.msg)
         }
         var imgPath = data.data[0];
         $('#imgpath').val(imgPath);
       },
       // 未响应的处理
       error: () => {
-        alert("不登录是没法上传图片的~");
+        alert("服务器可能正在维护，请刷新重试或联系管理员~");
       }
     })
-
-
   })
+
   // 发布按钮点击事件
   $('#publish').on('click', (event) => {
     addURL = '/api/addart'
@@ -87,10 +86,12 @@ $(function () {
       // 得到响应的处理
       success: data => {
         alert(data.msg)
-        window.location.href = "/";
+        if (data.code == '200') {
+          window.location.href = "/";
+        }
       },
       error: (data) => {
-        alert("不登录是没办法发文章的哦~")
+        alert("服务器可能正在维护，请刷新重试或联系管理员")
       },
     })
   })
