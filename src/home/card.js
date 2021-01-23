@@ -7,7 +7,7 @@ $(function () {
       // 得到响应的处理
       success: data => {
         if(data.code != '200'){
-          alert('该分区暂时没有文章哦~')
+          alert(data.msg)
           return
         }
         $.each(data.data.articles, (index, item) => {

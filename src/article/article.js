@@ -1,5 +1,5 @@
 $(function () {
-  // 文章解析
+  // URL解析
   $.getUrlParam = function (name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
@@ -7,13 +7,15 @@ $(function () {
   }
 
   var artid = $.getUrlParam('artid');
-  if (artid == '/') {
+  
+  console.log(artid)
+  if (artid == null) {
     window.location.href = "/";
     return
   }
   // 发起请求
-  articleURL = '/api/getart'
-  $.ajax(articleURL, {
+  infoURL = '/api/getart'
+  $.ajax(infoURL, {
     method: 'POST',
     data: {
       artid: artid
@@ -36,7 +38,7 @@ $(function () {
       $('#content').html(data.data.article.content.replace('\"','"'))
     },
     error: () => {
-      alert('失败')
+      alert('服务器可能正在维护，请刷新重试或联系管理员')
     }
   })
 })

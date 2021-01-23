@@ -1,5 +1,6 @@
 $(function () {
   myinfoURL = '/api/myinfo'
+  searchURL = '/api/search'
   // 加载navbar
   $('#navbar').load('/src/navbar/navbar.html', () => {
     url = window.location.href
@@ -30,7 +31,7 @@ $(function () {
     if (window.localStorage.getItem('token') == null) {
       return
     }
-
+    // 登录状态查询
     $.ajax(myinfoURL, {
       method: 'POST',
       beforeSend: xhr => {
@@ -42,11 +43,29 @@ $(function () {
           $('#login-link').addClass('d-none')
           $('#userinfo').removeClass('d-none')
           $('#userinfo a').text(data.data.user.name)
-          $('#nav-headimg').attr('src',data.data.user.headimg)
+          $('#userinfo a').attr('href',`/user?userid=${data.data.user.userid}&pageid=1`)
+          $('#nav-headimg').attr('src', data.data.user.headimg)
         } else {
           console.log("Token已过期，请重新登录")
         }
       }
     })
+
+    // 搜索
+    $('#search').on('click', () => {
+      namedata = $('#search-input').val();
+      $.ajax(searchURL, {
+        method: 'POST',
+        data: {
+          name: namedata
+        },
+        success: (data) => {
+          alert(data.msg)
+         },
+      })
+
+    })
+
+
   })
 })
